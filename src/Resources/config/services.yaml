@@ -1,0 +1,15 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: false
+        autoconfigure: false
+        public: false
+
+    ConnectHolland\UptimeRobotBundle\Api\Client:
+        public: true
+        lazy: true
+        factory: [ConnectHolland\UptimeRobotBundle\Api\Client, createClient]
+        arguments:
+            $httpClient: ~
+            $apiKey: '%env(UPTIMEROBOT_API_KEY)%'

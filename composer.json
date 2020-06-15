@@ -1,0 +1,75 @@
+{
+    "name": "connectholland/uptime-robot-bundle",
+    "type": "symfony-bundle",
+    "description": "Uptime Robot bundle for Symfony 4/5 projects",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Reyo Stallenberg",
+            "email": "reyo@connectholland.nl"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "jane-php/open-api-runtime": "^5.3",
+        "php-http/httplug-bundle": "^1.18",
+        "symfony/config": "^4.3 || ^5.0",
+        "symfony/dependency-injection": "^4.3 || ^5.0",
+        "symfony/framework-bundle": "^4.3 || ^5.0",
+        "symfony/http-kernel": "^4.3 || ^5.0",
+        "symfony/translation-contracts": "^2.1"
+    },
+    "require-dev": {
+        "ergebnis/composer-normalize": "^2.0.1",
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "icanhazstring/composer-unused": "^0.5.6",
+        "jane-php/open-api-2": "^5.3",
+        "maglnet/composer-require-checker": "^2.0",
+        "phpstan/phpstan": "^0.11.16",
+        "phpunit/phpunit": "^8.3",
+        "sensiolabs/security-checker": "^6.0",
+        "symfony/var-dumper": "^4.3 || ^5.0"
+    },
+    "suggest": {},
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ConnectHolland\\UptimeRobotBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ConnectHolland\\UptimeRobotBundle\\Tests\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "analyse": [
+            "composer unused --no-ansi",
+            "security-checker security:check",
+            "composer-require-checker",
+            "phpstan analyse --level=7 src/ tests/"
+        ],
+        "fix": [
+            "php-cs-fixer fix --allow-risky=yes",
+            "composer normalize --no-update-lock"
+        ],
+        "generate": [
+            "jane-openapi generate --config-file=src/Resources/config/jane-openapi-config.php"
+        ],
+        "test": [
+            "phpunit"
+        ]
+    }
+}
