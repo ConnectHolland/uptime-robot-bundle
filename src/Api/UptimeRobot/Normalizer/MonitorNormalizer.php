@@ -121,6 +121,21 @@ class MonitorNormalizer implements DenormalizerInterface, NormalizerInterface, D
         } elseif (property_exists($data, 'logs') && $data->{'logs'} === null) {
             $object->setLogs(null);
         }
+        if (property_exists($data, 'custom_uptime_ratio') && $data->{'custom_uptime_ratio'} !== null) {
+            $object->setCustomUptimeRatio($data->{'custom_uptime_ratio'});
+        } elseif (property_exists($data, 'custom_uptime_ratio') && $data->{'custom_uptime_ratio'} === null) {
+            $object->setCustomUptimeRatio(null);
+        }
+        if (property_exists($data, 'custom_uptime_ranges') && $data->{'custom_uptime_ranges'} !== null) {
+            $object->setCustomUptimeRanges($data->{'custom_uptime_ranges'});
+        } elseif (property_exists($data, 'custom_uptime_ranges') && $data->{'custom_uptime_ranges'} === null) {
+            $object->setCustomUptimeRanges(null);
+        }
+        if (property_exists($data, 'custom_down_durations') && $data->{'custom_down_durations'} !== null) {
+            $object->setCustomDownDurations($data->{'custom_down_durations'});
+        } elseif (property_exists($data, 'custom_down_durations') && $data->{'custom_down_durations'} === null) {
+            $object->setCustomDownDurations(null);
+        }
 
         return $object;
     }
@@ -211,6 +226,21 @@ class MonitorNormalizer implements DenormalizerInterface, NormalizerInterface, D
             $data->{'logs'} = $values;
         } else {
             $data->{'logs'} = null;
+        }
+        if (null !== $object->getCustomUptimeRatio()) {
+            $data->{'custom_uptime_ratio'} = $object->getCustomUptimeRatio();
+        } else {
+            $data->{'custom_uptime_ratio'} = null;
+        }
+        if (null !== $object->getCustomUptimeRanges()) {
+            $data->{'custom_uptime_ranges'} = $object->getCustomUptimeRanges();
+        } else {
+            $data->{'custom_uptime_ranges'} = null;
+        }
+        if (null !== $object->getCustomDownDurations()) {
+            $data->{'custom_down_durations'} = $object->getCustomDownDurations();
+        } else {
+            $data->{'custom_down_durations'} = null;
         }
 
         return $data;

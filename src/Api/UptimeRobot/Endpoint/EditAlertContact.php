@@ -19,7 +19,7 @@ class EditAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
      *     @var string $api_key API key
      *     @var string $format Response format
      *     @var int $id
-     *     @var string $type 1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet)
+     *     @var int $type 1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet)
      *     @var string $value address qualifier depending on type (can only be used if it is a web-hook alert contact)
      *     @var string $friendly_name
      * }
@@ -60,7 +60,7 @@ class EditAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
         $optionsResolver->setAllowedTypes('api_key', ['string']);
         $optionsResolver->setAllowedTypes('format', ['string']);
         $optionsResolver->setAllowedTypes('id', ['int']);
-        $optionsResolver->setAllowedTypes('type', ['string']);
+        $optionsResolver->setAllowedTypes('type', ['int']);
         $optionsResolver->setAllowedTypes('value', ['string']);
         $optionsResolver->setAllowedTypes('friendly_name', ['string']);
 

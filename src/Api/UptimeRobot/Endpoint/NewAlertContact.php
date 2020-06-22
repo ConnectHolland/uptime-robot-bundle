@@ -18,7 +18,7 @@ class NewAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
      *
      *     @var string $api_key API key
      *     @var string $format Response format
-     *     @var string $type 1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet)
+     *     @var int $type 1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet)
      *     @var string $value address qualifier depending on type, e.g. email address
      *     @var string $friendly_name
      * }
@@ -58,7 +58,7 @@ class NewAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
         $optionsResolver->setDefaults(['format' => 'json']);
         $optionsResolver->setAllowedTypes('api_key', ['string']);
         $optionsResolver->setAllowedTypes('format', ['string']);
-        $optionsResolver->setAllowedTypes('type', ['string']);
+        $optionsResolver->setAllowedTypes('type', ['int']);
         $optionsResolver->setAllowedTypes('value', ['string']);
         $optionsResolver->setAllowedTypes('friendly_name', ['string']);
 

@@ -179,6 +179,15 @@
           "items": {
             "$ref": "#/definitions/Log"
           }
+        },
+        "custom_uptime_ratio": {
+          "type": "string"
+        },
+        "custom_uptime_ranges": {
+          "type": "string"
+        },
+        "custom_down_durations": {
+          "type": "string"
         }
       }
     },
@@ -186,7 +195,7 @@
       "type": "object",
       "properties": {
         "type": {
-          "type": "string"
+          "type": "integer"
         },
         "datetime": {
           "type": "integer"
@@ -487,6 +496,13 @@
             "name": "custom_uptime_ratios",
             "in": "formData",
             "description": "optional (defines the number of days to calculate the uptime ratio(s) for. Ex: customUptimeRatio=7-30-45 to get the uptime ratios for those periods)",
+            "type": "string",
+            "required": false
+          },
+          {
+            "name": "custom_uptime_ranges",
+            "in": "formData",
+            "description": "optional (defines the ranges to calculate the uptime ratio(s) for. Ex: custom_uptime_ranges=1465440758_1466304758 to get the uptime ratios for those periods. It is possible to send multiple ranges like 1465440758_1466304758-1434682358_1434855158)",
             "type": "string",
             "required": false
           },
@@ -1045,7 +1061,7 @@
           {
             "name": "type",
             "in": "formData",
-            "type": "string",
+            "type": "integer",
             "description": "1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet).",
             "default": "2",
             "required": true
@@ -1113,7 +1129,7 @@
           {
             "name": "type",
             "in": "formData",
-            "type": "string",
+            "type": "integer",
             "description": "1 - SMS, 2 - E-mail, 3 - Twitter DM, 4 - Boxcar, 5 - Web-Hook, 6 - Pushbullet, 7 - Zapier, 9 - Pushover, 10 - HipChat, 11 - Slack - he type of the alert contact notified (SMS is not supported yet).",
             "default": "2",
             "required": true

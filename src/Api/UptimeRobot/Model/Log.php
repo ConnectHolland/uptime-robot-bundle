@@ -12,7 +12,7 @@ namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model;
 class Log
 {
     /**
-     * @var string|null
+     * @var int|null
      */
     protected $type;
     /**
@@ -24,12 +24,12 @@ class Log
      */
     protected $duration;
 
-    public function getType(): ?string
+    public function getType(): ?int
     {
         return $this->type;
     }
 
-    public function setType(?string $type): self
+    public function setType(?int $type): self
     {
         $this->type = $type;
 

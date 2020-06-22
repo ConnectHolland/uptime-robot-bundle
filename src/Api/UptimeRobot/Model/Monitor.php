@@ -75,6 +75,18 @@ class Monitor
      * @var Log[]|null
      */
     protected $logs;
+    /**
+     * @var string|null
+     */
+    protected $customUptimeRatio;
+    /**
+     * @var string|null
+     */
+    protected $customUptimeRanges;
+    /**
+     * @var string|null
+     */
+    protected $customDownDurations;
 
     public function getId(): ?int
     {
@@ -270,6 +282,42 @@ class Monitor
     public function setLogs(?array $logs): self
     {
         $this->logs = $logs;
+
+        return $this;
+    }
+
+    public function getCustomUptimeRatio(): ?string
+    {
+        return $this->customUptimeRatio;
+    }
+
+    public function setCustomUptimeRatio(?string $customUptimeRatio): self
+    {
+        $this->customUptimeRatio = $customUptimeRatio;
+
+        return $this;
+    }
+
+    public function getCustomUptimeRanges(): ?string
+    {
+        return $this->customUptimeRanges;
+    }
+
+    public function setCustomUptimeRanges(?string $customUptimeRanges): self
+    {
+        $this->customUptimeRanges = $customUptimeRanges;
+
+        return $this;
+    }
+
+    public function getCustomDownDurations(): ?string
+    {
+        return $this->customDownDurations;
+    }
+
+    public function setCustomDownDurations(?string $customDownDurations): self
+    {
+        $this->customDownDurations = $customDownDurations;
 
         return $this;
     }

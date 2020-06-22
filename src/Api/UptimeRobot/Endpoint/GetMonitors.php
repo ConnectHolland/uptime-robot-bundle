@@ -27,6 +27,7 @@ class GetMonitors extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
      *     @var string $types optional (if not used, will return all monitors types (HTTP, keyword, ping..) in an account. Else, it is possible to define any number of monitor types like: types=1-3-4)
      *     @var string $statuses optional (if not used, will return all monitors statuses (up, down, paused) in an account. Else, it is possible to define any number of monitor statuses like: statuses=2-9)
      *     @var string $custom_uptime_ratios optional (defines the number of days to calculate the uptime ratio(s) for. Ex: customUptimeRatio=7-30-45 to get the uptime ratios for those periods)
+     *     @var string $custom_uptime_ranges optional (defines the ranges to calculate the uptime ratio(s) for. Ex: custom_uptime_ranges=1465440758_1466304758 to get the uptime ratios for those periods. It is possible to send multiple ranges like 1465440758_1466304758-1434682358_1434855158)
      *     @var int $logs optional (defines if the logs of each monitor will be returned. Should be set to 1 for getting the logs. Default is 0)
      *     @var string $logs_limit optional (the number of logs to be returned (descending order). If empty, all logs are returned.
      *     @var string $response_times optional (defines if the response time data of each monitor will be returned. Should be set to 1 for getting them. Default is 0)
@@ -81,7 +82,7 @@ class GetMonitors extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     protected function getFormOptionsResolver(): \Symfony\Component\OptionsResolver\OptionsResolver
     {
         $optionsResolver = parent::getFormOptionsResolver();
-        $optionsResolver->setDefined(['api_key', 'format', 'monitors', 'types', 'statuses', 'custom_uptime_ratios', 'logs', 'logs_limit', 'response_times', 'response_times_limits', 'response_times_average', 'response_times_start_date', 'response_times_end_date', 'alert_contacts', 'offset', 'limit']);
+        $optionsResolver->setDefined(['api_key', 'format', 'monitors', 'types', 'statuses', 'custom_uptime_ratios', 'custom_uptime_ranges', 'logs', 'logs_limit', 'response_times', 'response_times_limits', 'response_times_average', 'response_times_start_date', 'response_times_end_date', 'alert_contacts', 'offset', 'limit']);
         $optionsResolver->setRequired([]);
         $optionsResolver->setDefaults(['format' => 'json', 'offset' => 0, 'limit' => 50]);
         $optionsResolver->setAllowedTypes('api_key', ['string']);
@@ -90,6 +91,7 @@ class GetMonitors extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
         $optionsResolver->setAllowedTypes('types', ['string']);
         $optionsResolver->setAllowedTypes('statuses', ['string']);
         $optionsResolver->setAllowedTypes('custom_uptime_ratios', ['string']);
+        $optionsResolver->setAllowedTypes('custom_uptime_ranges', ['string']);
         $optionsResolver->setAllowedTypes('logs', ['int']);
         $optionsResolver->setAllowedTypes('logs_limit', ['string']);
         $optionsResolver->setAllowedTypes('response_times', ['string']);
