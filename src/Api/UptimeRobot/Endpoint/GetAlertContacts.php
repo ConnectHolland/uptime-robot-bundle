@@ -85,4 +85,9 @@ class GetAlertContacts extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\GetAlertContactsInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

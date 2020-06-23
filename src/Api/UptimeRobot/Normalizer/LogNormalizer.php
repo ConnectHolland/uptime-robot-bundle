@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class LogNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,23 +36,26 @@ class LogNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\Log();
-        if (property_exists($data, 'type') && $data->{'type'} !== null) {
-            $object->setType($data->{'type'});
-        } elseif (property_exists($data, 'type') && $data->{'type'} === null) {
+        if (\array_key_exists('type', $data) && $data['type'] !== null) {
+            $object->setType($data['type']);
+        } elseif (\array_key_exists('type', $data) && $data['type'] === null) {
             $object->setType(null);
         }
-        if (property_exists($data, 'datetime') && $data->{'datetime'} !== null) {
-            $object->setDatetime($data->{'datetime'});
-        } elseif (property_exists($data, 'datetime') && $data->{'datetime'} === null) {
+        if (\array_key_exists('datetime', $data) && $data['datetime'] !== null) {
+            $object->setDatetime($data['datetime']);
+        } elseif (\array_key_exists('datetime', $data) && $data['datetime'] === null) {
             $object->setDatetime(null);
         }
-        if (property_exists($data, 'duration') && $data->{'duration'} !== null) {
-            $object->setDuration($data->{'duration'});
-        } elseif (property_exists($data, 'duration') && $data->{'duration'} === null) {
+        if (\array_key_exists('duration', $data) && $data['duration'] !== null) {
+            $object->setDuration($data['duration']);
+        } elseif (\array_key_exists('duration', $data) && $data['duration'] === null) {
             $object->setDuration(null);
         }
 
@@ -58,21 +64,15 @@ class LogNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getType()) {
-            $data->{'type'} = $object->getType();
-        } else {
-            $data->{'type'} = null;
+            $data['type'] = $object->getType();
         }
         if (null !== $object->getDatetime()) {
-            $data->{'datetime'} = $object->getDatetime();
-        } else {
-            $data->{'datetime'} = null;
+            $data['datetime'] = $object->getDatetime();
         }
         if (null !== $object->getDuration()) {
-            $data->{'duration'} = $object->getDuration();
-        } else {
-            $data->{'duration'} = null;
+            $data['duration'] = $object->getDuration();
         }
 
         return $data;

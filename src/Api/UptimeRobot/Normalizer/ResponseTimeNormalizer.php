@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class ResponseTimeNormalizer implements DenormalizerInterface, NormalizerInterfa
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,18 +36,21 @@ class ResponseTimeNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\ResponseTime();
-        if (property_exists($data, 'value') && $data->{'value'} !== null) {
-            $object->setValue($data->{'value'});
-        } elseif (property_exists($data, 'value') && $data->{'value'} === null) {
+        if (\array_key_exists('value', $data) && $data['value'] !== null) {
+            $object->setValue($data['value']);
+        } elseif (\array_key_exists('value', $data) && $data['value'] === null) {
             $object->setValue(null);
         }
-        if (property_exists($data, 'datetime') && $data->{'datetime'} !== null) {
-            $object->setDatetime($data->{'datetime'});
-        } elseif (property_exists($data, 'datetime') && $data->{'datetime'} === null) {
+        if (\array_key_exists('datetime', $data) && $data['datetime'] !== null) {
+            $object->setDatetime($data['datetime']);
+        } elseif (\array_key_exists('datetime', $data) && $data['datetime'] === null) {
             $object->setDatetime(null);
         }
 
@@ -53,16 +59,12 @@ class ResponseTimeNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getValue()) {
-            $data->{'value'} = $object->getValue();
-        } else {
-            $data->{'value'} = null;
+            $data['value'] = $object->getValue();
         }
         if (null !== $object->getDatetime()) {
-            $data->{'datetime'} = $object->getDatetime();
-        } else {
-            $data->{'datetime'} = null;
+            $data['datetime'] = $object->getDatetime();
         }
 
         return $data;

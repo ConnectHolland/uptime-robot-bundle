@@ -85,4 +85,9 @@ class GetPSPs extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\GetPSPsInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

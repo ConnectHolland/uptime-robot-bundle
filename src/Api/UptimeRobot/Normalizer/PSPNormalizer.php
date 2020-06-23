@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class PSPNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,43 +36,46 @@ class PSPNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\PSP();
-        if (property_exists($data, 'id') && $data->{'id'} !== null) {
-            $object->setId($data->{'id'});
-        } elseif (property_exists($data, 'id') && $data->{'id'} === null) {
+        if (\array_key_exists('id', $data) && $data['id'] !== null) {
+            $object->setId($data['id']);
+        } elseif (\array_key_exists('id', $data) && $data['id'] === null) {
             $object->setId(null);
         }
-        if (property_exists($data, 'friendly_name') && $data->{'friendly_name'} !== null) {
-            $object->setFriendlyName($data->{'friendly_name'});
-        } elseif (property_exists($data, 'friendly_name') && $data->{'friendly_name'} === null) {
+        if (\array_key_exists('friendly_name', $data) && $data['friendly_name'] !== null) {
+            $object->setFriendlyName($data['friendly_name']);
+        } elseif (\array_key_exists('friendly_name', $data) && $data['friendly_name'] === null) {
             $object->setFriendlyName(null);
         }
-        if (property_exists($data, 'monitors') && $data->{'monitors'} !== null) {
-            $object->setMonitors($data->{'monitors'});
-        } elseif (property_exists($data, 'monitors') && $data->{'monitors'} === null) {
+        if (\array_key_exists('monitors', $data) && $data['monitors'] !== null) {
+            $object->setMonitors($data['monitors']);
+        } elseif (\array_key_exists('monitors', $data) && $data['monitors'] === null) {
             $object->setMonitors(null);
         }
-        if (property_exists($data, 'sort') && $data->{'sort'} !== null) {
-            $object->setSort($data->{'sort'});
-        } elseif (property_exists($data, 'sort') && $data->{'sort'} === null) {
+        if (\array_key_exists('sort', $data) && $data['sort'] !== null) {
+            $object->setSort($data['sort']);
+        } elseif (\array_key_exists('sort', $data) && $data['sort'] === null) {
             $object->setSort(null);
         }
-        if (property_exists($data, 'status') && $data->{'status'} !== null) {
-            $object->setStatus($data->{'status'});
-        } elseif (property_exists($data, 'status') && $data->{'status'} === null) {
+        if (\array_key_exists('status', $data) && $data['status'] !== null) {
+            $object->setStatus($data['status']);
+        } elseif (\array_key_exists('status', $data) && $data['status'] === null) {
             $object->setStatus(null);
         }
-        if (property_exists($data, 'standard_url') && $data->{'standard_url'} !== null) {
-            $object->setStandardUrl($data->{'standard_url'});
-        } elseif (property_exists($data, 'standard_url') && $data->{'standard_url'} === null) {
+        if (\array_key_exists('standard_url', $data) && $data['standard_url'] !== null) {
+            $object->setStandardUrl($data['standard_url']);
+        } elseif (\array_key_exists('standard_url', $data) && $data['standard_url'] === null) {
             $object->setStandardUrl(null);
         }
-        if (property_exists($data, 'custom_url') && $data->{'custom_url'} !== null) {
-            $object->setCustomUrl($data->{'custom_url'});
-        } elseif (property_exists($data, 'custom_url') && $data->{'custom_url'} === null) {
+        if (\array_key_exists('custom_url', $data) && $data['custom_url'] !== null) {
+            $object->setCustomUrl($data['custom_url']);
+        } elseif (\array_key_exists('custom_url', $data) && $data['custom_url'] === null) {
             $object->setCustomUrl(null);
         }
 
@@ -78,41 +84,27 @@ class PSPNormalizer implements DenormalizerInterface, NormalizerInterface, Denor
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getId()) {
-            $data->{'id'} = $object->getId();
-        } else {
-            $data->{'id'} = null;
+            $data['id'] = $object->getId();
         }
         if (null !== $object->getFriendlyName()) {
-            $data->{'friendly_name'} = $object->getFriendlyName();
-        } else {
-            $data->{'friendly_name'} = null;
+            $data['friendly_name'] = $object->getFriendlyName();
         }
         if (null !== $object->getMonitors()) {
-            $data->{'monitors'} = $object->getMonitors();
-        } else {
-            $data->{'monitors'} = null;
+            $data['monitors'] = $object->getMonitors();
         }
         if (null !== $object->getSort()) {
-            $data->{'sort'} = $object->getSort();
-        } else {
-            $data->{'sort'} = null;
+            $data['sort'] = $object->getSort();
         }
         if (null !== $object->getStatus()) {
-            $data->{'status'} = $object->getStatus();
-        } else {
-            $data->{'status'} = null;
+            $data['status'] = $object->getStatus();
         }
         if (null !== $object->getStandardUrl()) {
-            $data->{'standard_url'} = $object->getStandardUrl();
-        } else {
-            $data->{'standard_url'} = null;
+            $data['standard_url'] = $object->getStandardUrl();
         }
         if (null !== $object->getCustomUrl()) {
-            $data->{'custom_url'} = $object->getCustomUrl();
-        } else {
-            $data->{'custom_url'} = null;
+            $data['custom_url'] = $object->getCustomUrl();
         }
 
         return $data;

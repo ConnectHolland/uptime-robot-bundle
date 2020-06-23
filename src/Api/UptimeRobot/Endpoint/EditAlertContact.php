@@ -87,4 +87,9 @@ class EditAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implemen
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\EditAlertContactInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

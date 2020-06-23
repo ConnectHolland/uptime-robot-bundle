@@ -91,4 +91,9 @@ class NewPSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\O
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\NewPSPInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

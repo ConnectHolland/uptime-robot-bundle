@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class MonitorResponseNormalizer implements DenormalizerInterface, NormalizerInte
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,23 +36,26 @@ class MonitorResponseNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\MonitorResponse();
-        if (property_exists($data, 'stat') && $data->{'stat'} !== null) {
-            $object->setStat($data->{'stat'});
-        } elseif (property_exists($data, 'stat') && $data->{'stat'} === null) {
+        if (\array_key_exists('stat', $data) && $data['stat'] !== null) {
+            $object->setStat($data['stat']);
+        } elseif (\array_key_exists('stat', $data) && $data['stat'] === null) {
             $object->setStat(null);
         }
-        if (property_exists($data, 'monitor') && $data->{'monitor'} !== null) {
-            $object->setMonitor($this->denormalizer->denormalize($data->{'monitor'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Monitor', 'json', $context));
-        } elseif (property_exists($data, 'monitor') && $data->{'monitor'} === null) {
+        if (\array_key_exists('monitor', $data) && $data['monitor'] !== null) {
+            $object->setMonitor($this->denormalizer->denormalize($data['monitor'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Monitor', 'json', $context));
+        } elseif (\array_key_exists('monitor', $data) && $data['monitor'] === null) {
             $object->setMonitor(null);
         }
-        if (property_exists($data, 'error') && $data->{'error'} !== null) {
-            $object->setError($this->denormalizer->denormalize($data->{'error'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
-        } elseif (property_exists($data, 'error') && $data->{'error'} === null) {
+        if (\array_key_exists('error', $data) && $data['error'] !== null) {
+            $object->setError($this->denormalizer->denormalize($data['error'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
+        } elseif (\array_key_exists('error', $data) && $data['error'] === null) {
             $object->setError(null);
         }
 
@@ -58,21 +64,15 @@ class MonitorResponseNormalizer implements DenormalizerInterface, NormalizerInte
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getStat()) {
-            $data->{'stat'} = $object->getStat();
-        } else {
-            $data->{'stat'} = null;
+            $data['stat'] = $object->getStat();
         }
         if (null !== $object->getMonitor()) {
-            $data->{'monitor'} = $this->normalizer->normalize($object->getMonitor(), 'json', $context);
-        } else {
-            $data->{'monitor'} = null;
+            $data['monitor'] = $this->normalizer->normalize($object->getMonitor(), 'json', $context);
         }
         if (null !== $object->getError()) {
-            $data->{'error'} = $this->normalizer->normalize($object->getError(), 'json', $context);
-        } else {
-            $data->{'error'} = null;
+            $data['error'] = $this->normalizer->normalize($object->getError(), 'json', $context);
         }
 
         return $data;

@@ -81,4 +81,9 @@ class DeleteMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\DeleteMonitorInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }
