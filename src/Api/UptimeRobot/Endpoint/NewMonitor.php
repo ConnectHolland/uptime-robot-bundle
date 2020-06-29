@@ -103,4 +103,9 @@ class NewMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\NewMonitorInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

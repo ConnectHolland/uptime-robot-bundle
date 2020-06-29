@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class GetMWindowsResponseNormalizer implements DenormalizerInterface, Normalizer
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,32 +36,35 @@ class GetMWindowsResponseNormalizer implements DenormalizerInterface, Normalizer
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\GetMWindowsResponse();
-        if (property_exists($data, 'stat') && $data->{'stat'} !== null) {
-            $object->setStat($data->{'stat'});
-        } elseif (property_exists($data, 'stat') && $data->{'stat'} === null) {
+        if (\array_key_exists('stat', $data) && $data['stat'] !== null) {
+            $object->setStat($data['stat']);
+        } elseif (\array_key_exists('stat', $data) && $data['stat'] === null) {
             $object->setStat(null);
         }
-        if (property_exists($data, 'error') && $data->{'error'} !== null) {
-            $object->setError($this->denormalizer->denormalize($data->{'error'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
-        } elseif (property_exists($data, 'error') && $data->{'error'} === null) {
+        if (\array_key_exists('error', $data) && $data['error'] !== null) {
+            $object->setError($this->denormalizer->denormalize($data['error'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
+        } elseif (\array_key_exists('error', $data) && $data['error'] === null) {
             $object->setError(null);
         }
-        if (property_exists($data, 'pagination') && $data->{'pagination'} !== null) {
-            $object->setPagination($this->denormalizer->denormalize($data->{'pagination'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Pagination', 'json', $context));
-        } elseif (property_exists($data, 'pagination') && $data->{'pagination'} === null) {
+        if (\array_key_exists('pagination', $data) && $data['pagination'] !== null) {
+            $object->setPagination($this->denormalizer->denormalize($data['pagination'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Pagination', 'json', $context));
+        } elseif (\array_key_exists('pagination', $data) && $data['pagination'] === null) {
             $object->setPagination(null);
         }
-        if (property_exists($data, 'mwindows') && $data->{'mwindows'} !== null) {
+        if (\array_key_exists('mwindows', $data) && $data['mwindows'] !== null) {
             $values = [];
-            foreach ($data->{'mwindows'} as $value) {
+            foreach ($data['mwindows'] as $value) {
                 $values[] = $this->denormalizer->denormalize($value, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\MWindow', 'json', $context);
             }
             $object->setMwindows($values);
-        } elseif (property_exists($data, 'mwindows') && $data->{'mwindows'} === null) {
+        } elseif (\array_key_exists('mwindows', $data) && $data['mwindows'] === null) {
             $object->setMwindows(null);
         }
 
@@ -67,30 +73,22 @@ class GetMWindowsResponseNormalizer implements DenormalizerInterface, Normalizer
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getStat()) {
-            $data->{'stat'} = $object->getStat();
-        } else {
-            $data->{'stat'} = null;
+            $data['stat'] = $object->getStat();
         }
         if (null !== $object->getError()) {
-            $data->{'error'} = $this->normalizer->normalize($object->getError(), 'json', $context);
-        } else {
-            $data->{'error'} = null;
+            $data['error'] = $this->normalizer->normalize($object->getError(), 'json', $context);
         }
         if (null !== $object->getPagination()) {
-            $data->{'pagination'} = $this->normalizer->normalize($object->getPagination(), 'json', $context);
-        } else {
-            $data->{'pagination'} = null;
+            $data['pagination'] = $this->normalizer->normalize($object->getPagination(), 'json', $context);
         }
         if (null !== $object->getMwindows()) {
             $values = [];
             foreach ($object->getMwindows() as $value) {
                 $values[] = $this->normalizer->normalize($value, 'json', $context);
             }
-            $data->{'mwindows'} = $values;
-        } else {
-            $data->{'mwindows'} = null;
+            $data['mwindows'] = $values;
         }
 
         return $data;

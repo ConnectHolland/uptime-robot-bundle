@@ -85,4 +85,9 @@ class NewAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implement
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\NewAlertContactInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

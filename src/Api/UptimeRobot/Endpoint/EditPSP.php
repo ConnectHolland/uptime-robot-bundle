@@ -93,4 +93,9 @@ class EditPSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\EditPSPInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

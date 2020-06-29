@@ -79,4 +79,9 @@ class GetAccountDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint impleme
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\GetAccountDetailsInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

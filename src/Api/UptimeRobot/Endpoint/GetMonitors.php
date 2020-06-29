@@ -126,4 +126,9 @@ class GetMonitors extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\GetMonitorsInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

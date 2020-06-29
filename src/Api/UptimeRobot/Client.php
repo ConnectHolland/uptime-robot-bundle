@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot;
 
-class Client extends \Jane\OpenApiRuntime\Client\Psr7HttplugClient
+class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
 {
     /**
      * Account details (max number of monitors that can be added and number of up/down/paused monitors) can be grabbed using this method.
@@ -405,20 +405,23 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr7HttplugClient
         return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeletePSP($formParameters), $fetch);
     }
 
-    public static function create($httpClient = null)
+    public static function create($httpClient = null, array $additionalPlugins = [])
     {
         if (null === $httpClient) {
-            $httpClient = \Http\Discovery\HttpClientDiscovery::find();
+            $httpClient = \Http\Discovery\Psr18ClientDiscovery::find();
             $plugins    = [];
-            $uri        = \Http\Discovery\UriFactoryDiscovery::find()->createUri('https://api.uptimerobot.com/v2');
+            $uri        = \Http\Discovery\Psr17FactoryDiscovery::findUrlFactory()->createUri('https://api.uptimerobot.com/v2');
             $plugins[]  = new \Http\Client\Common\Plugin\AddHostPlugin($uri);
             $plugins[]  = new \Http\Client\Common\Plugin\AddPathPlugin($uri);
+            if (count($additionalPlugins) > 0) {
+                $plugins = array_merge($plugins, $additionalPlugins);
+            }
             $httpClient = new \Http\Client\Common\PluginClient($httpClient, $plugins);
         }
-        $messageFactory = \Http\Discovery\MessageFactoryDiscovery::find();
-        $streamFactory  = \Http\Discovery\StreamFactoryDiscovery::find();
-        $serializer     = new \Symfony\Component\Serializer\Serializer([new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer\JaneObjectNormalizer()], [new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode())]);
+        $requestFactory = \Http\Discovery\Psr17FactoryDiscovery::findRequestFactory();
+        $streamFactory  = \Http\Discovery\Psr17FactoryDiscovery::findStreamFactory();
+        $serializer     = new \Symfony\Component\Serializer\Serializer([new \Symfony\Component\Serializer\Normalizer\ArrayDenormalizer(), new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer\JaneObjectNormalizer()], [new \Symfony\Component\Serializer\Encoder\JsonEncoder(new \Symfony\Component\Serializer\Encoder\JsonEncode(), new \Symfony\Component\Serializer\Encoder\JsonDecode(['json_decode_associative' => true]))]);
 
-        return new static($httpClient, $messageFactory, $serializer, $streamFactory);
+        return new static($httpClient, $requestFactory, $serializer, $streamFactory);
     }
 }

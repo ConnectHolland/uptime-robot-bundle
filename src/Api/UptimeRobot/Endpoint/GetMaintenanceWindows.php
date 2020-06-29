@@ -85,4 +85,9 @@ class GetMaintenanceWindows extends \Jane\OpenApiRuntime\Client\BaseEndpoint imp
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\GetMaintenanceWindowsInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

@@ -81,4 +81,9 @@ class DeleteAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implem
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\DeleteAlertContactInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

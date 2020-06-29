@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class AlertContactNormalizer implements DenormalizerInterface, NormalizerInterfa
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,33 +36,36 @@ class AlertContactNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\AlertContact();
-        if (property_exists($data, 'id') && $data->{'id'} !== null) {
-            $object->setId($data->{'id'});
-        } elseif (property_exists($data, 'id') && $data->{'id'} === null) {
+        if (\array_key_exists('id', $data) && $data['id'] !== null) {
+            $object->setId($data['id']);
+        } elseif (\array_key_exists('id', $data) && $data['id'] === null) {
             $object->setId(null);
         }
-        if (property_exists($data, 'friendly_name') && $data->{'friendly_name'} !== null) {
-            $object->setFriendlyName($data->{'friendly_name'});
-        } elseif (property_exists($data, 'friendly_name') && $data->{'friendly_name'} === null) {
+        if (\array_key_exists('friendly_name', $data) && $data['friendly_name'] !== null) {
+            $object->setFriendlyName($data['friendly_name']);
+        } elseif (\array_key_exists('friendly_name', $data) && $data['friendly_name'] === null) {
             $object->setFriendlyName(null);
         }
-        if (property_exists($data, 'type') && $data->{'type'} !== null) {
-            $object->setType($data->{'type'});
-        } elseif (property_exists($data, 'type') && $data->{'type'} === null) {
+        if (\array_key_exists('type', $data) && $data['type'] !== null) {
+            $object->setType($data['type']);
+        } elseif (\array_key_exists('type', $data) && $data['type'] === null) {
             $object->setType(null);
         }
-        if (property_exists($data, 'status') && $data->{'status'} !== null) {
-            $object->setStatus($data->{'status'});
-        } elseif (property_exists($data, 'status') && $data->{'status'} === null) {
+        if (\array_key_exists('status', $data) && $data['status'] !== null) {
+            $object->setStatus($data['status']);
+        } elseif (\array_key_exists('status', $data) && $data['status'] === null) {
             $object->setStatus(null);
         }
-        if (property_exists($data, 'value') && $data->{'value'} !== null) {
-            $object->setValue($data->{'value'});
-        } elseif (property_exists($data, 'value') && $data->{'value'} === null) {
+        if (\array_key_exists('value', $data) && $data['value'] !== null) {
+            $object->setValue($data['value']);
+        } elseif (\array_key_exists('value', $data) && $data['value'] === null) {
             $object->setValue(null);
         }
 
@@ -68,31 +74,21 @@ class AlertContactNormalizer implements DenormalizerInterface, NormalizerInterfa
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getId()) {
-            $data->{'id'} = $object->getId();
-        } else {
-            $data->{'id'} = null;
+            $data['id'] = $object->getId();
         }
         if (null !== $object->getFriendlyName()) {
-            $data->{'friendly_name'} = $object->getFriendlyName();
-        } else {
-            $data->{'friendly_name'} = null;
+            $data['friendly_name'] = $object->getFriendlyName();
         }
         if (null !== $object->getType()) {
-            $data->{'type'} = $object->getType();
-        } else {
-            $data->{'type'} = null;
+            $data['type'] = $object->getType();
         }
         if (null !== $object->getStatus()) {
-            $data->{'status'} = $object->getStatus();
-        } else {
-            $data->{'status'} = null;
+            $data['status'] = $object->getStatus();
         }
         if (null !== $object->getValue()) {
-            $data->{'value'} = $object->getValue();
-        } else {
-            $data->{'value'} = null;
+            $data['value'] = $object->getValue();
         }
 
         return $data;

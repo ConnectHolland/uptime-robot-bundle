@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class AlertContactResponseNormalizer implements DenormalizerInterface, Normalize
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,23 +36,26 @@ class AlertContactResponseNormalizer implements DenormalizerInterface, Normalize
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\AlertContactResponse();
-        if (property_exists($data, 'stat') && $data->{'stat'} !== null) {
-            $object->setStat($data->{'stat'});
-        } elseif (property_exists($data, 'stat') && $data->{'stat'} === null) {
+        if (\array_key_exists('stat', $data) && $data['stat'] !== null) {
+            $object->setStat($data['stat']);
+        } elseif (\array_key_exists('stat', $data) && $data['stat'] === null) {
             $object->setStat(null);
         }
-        if (property_exists($data, 'error') && $data->{'error'} !== null) {
-            $object->setError($this->denormalizer->denormalize($data->{'error'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
-        } elseif (property_exists($data, 'error') && $data->{'error'} === null) {
+        if (\array_key_exists('error', $data) && $data['error'] !== null) {
+            $object->setError($this->denormalizer->denormalize($data['error'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\Error', 'json', $context));
+        } elseif (\array_key_exists('error', $data) && $data['error'] === null) {
             $object->setError(null);
         }
-        if (property_exists($data, 'alertcontact') && $data->{'alertcontact'} !== null) {
-            $object->setAlertcontact($this->denormalizer->denormalize($data->{'alertcontact'}, 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\AlertContact', 'json', $context));
-        } elseif (property_exists($data, 'alertcontact') && $data->{'alertcontact'} === null) {
+        if (\array_key_exists('alertcontact', $data) && $data['alertcontact'] !== null) {
+            $object->setAlertcontact($this->denormalizer->denormalize($data['alertcontact'], 'ConnectHolland\\UptimeRobotBundle\\Api\\UptimeRobot\\Model\\AlertContact', 'json', $context));
+        } elseif (\array_key_exists('alertcontact', $data) && $data['alertcontact'] === null) {
             $object->setAlertcontact(null);
         }
 
@@ -58,21 +64,15 @@ class AlertContactResponseNormalizer implements DenormalizerInterface, Normalize
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getStat()) {
-            $data->{'stat'} = $object->getStat();
-        } else {
-            $data->{'stat'} = null;
+            $data['stat'] = $object->getStat();
         }
         if (null !== $object->getError()) {
-            $data->{'error'} = $this->normalizer->normalize($object->getError(), 'json', $context);
-        } else {
-            $data->{'error'} = null;
+            $data['error'] = $this->normalizer->normalize($object->getError(), 'json', $context);
         }
         if (null !== $object->getAlertcontact()) {
-            $data->{'alertcontact'} = $this->normalizer->normalize($object->getAlertcontact(), 'json', $context);
-        } else {
-            $data->{'alertcontact'} = null;
+            $data['alertcontact'] = $this->normalizer->normalize($object->getAlertcontact(), 'json', $context);
         }
 
         return $data;

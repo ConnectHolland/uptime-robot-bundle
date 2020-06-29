@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Normalizer;
 
+use Jane\JsonSchemaRuntime\Normalizer\CheckArray;
+use Jane\JsonSchemaRuntime\Reference;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -20,6 +22,7 @@ class PaginationNormalizer implements DenormalizerInterface, NormalizerInterface
 {
     use DenormalizerAwareTrait;
     use NormalizerAwareTrait;
+    use CheckArray;
 
     public function supportsDenormalization($data, $type, $format = null)
     {
@@ -33,23 +36,26 @@ class PaginationNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function denormalize($data, $class, $format = null, array $context = [])
     {
-        if (!is_object($data)) {
-            return null;
+        if (isset($data['$ref'])) {
+            return new Reference($data['$ref'], $context['document-origin']);
+        }
+        if (isset($data['$recursiveRef'])) {
+            return new Reference($data['$recursiveRef'], $context['document-origin']);
         }
         $object = new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Model\Pagination();
-        if (property_exists($data, 'offset') && $data->{'offset'} !== null) {
-            $object->setOffset($data->{'offset'});
-        } elseif (property_exists($data, 'offset') && $data->{'offset'} === null) {
+        if (\array_key_exists('offset', $data) && $data['offset'] !== null) {
+            $object->setOffset($data['offset']);
+        } elseif (\array_key_exists('offset', $data) && $data['offset'] === null) {
             $object->setOffset(null);
         }
-        if (property_exists($data, 'limit') && $data->{'limit'} !== null) {
-            $object->setLimit($data->{'limit'});
-        } elseif (property_exists($data, 'limit') && $data->{'limit'} === null) {
+        if (\array_key_exists('limit', $data) && $data['limit'] !== null) {
+            $object->setLimit($data['limit']);
+        } elseif (\array_key_exists('limit', $data) && $data['limit'] === null) {
             $object->setLimit(null);
         }
-        if (property_exists($data, 'total') && $data->{'total'} !== null) {
-            $object->setTotal($data->{'total'});
-        } elseif (property_exists($data, 'total') && $data->{'total'} === null) {
+        if (\array_key_exists('total', $data) && $data['total'] !== null) {
+            $object->setTotal($data['total']);
+        } elseif (\array_key_exists('total', $data) && $data['total'] === null) {
             $object->setTotal(null);
         }
 
@@ -58,21 +64,15 @@ class PaginationNormalizer implements DenormalizerInterface, NormalizerInterface
 
     public function normalize($object, $format = null, array $context = [])
     {
-        $data = new \stdClass();
+        $data = [];
         if (null !== $object->getOffset()) {
-            $data->{'offset'} = $object->getOffset();
-        } else {
-            $data->{'offset'} = null;
+            $data['offset'] = $object->getOffset();
         }
         if (null !== $object->getLimit()) {
-            $data->{'limit'} = $object->getLimit();
-        } else {
-            $data->{'limit'} = null;
+            $data['limit'] = $object->getLimit();
         }
         if (null !== $object->getTotal()) {
-            $data->{'total'} = $object->getTotal();
-        } else {
-            $data->{'total'} = null;
+            $data['total'] = $object->getTotal();
         }
 
         return $data;

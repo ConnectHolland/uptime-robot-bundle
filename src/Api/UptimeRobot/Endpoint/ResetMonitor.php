@@ -81,4 +81,9 @@ class ResetMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\ResetMonitorInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

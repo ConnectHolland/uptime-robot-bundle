@@ -107,4 +107,9 @@ class EditMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\EditMonitorInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }

@@ -81,4 +81,9 @@ class DeletePSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jan
             throw new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Exception\DeletePSPInternalServerErrorException();
         }
     }
+
+    public function getAuthenticationScopes(): array
+    {
+        return [];
+    }
 }
