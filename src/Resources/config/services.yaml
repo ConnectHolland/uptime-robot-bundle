@@ -12,4 +12,4 @@ services:
         factory: [ConnectHolland\UptimeRobotBundle\Api\Client, createClient]
         arguments:
             $httpClient: ~
-            $apiKey: '%env(UPTIMEROBOT_API_KEY)%'
+            $apiKey: '%uptime_robot.api_key%'
