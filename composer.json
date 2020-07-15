@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.3",
-        "jane-php/open-api-runtime": "^6.0",
+        "jane-php/open-api-runtime": "^6.0.2",
         "php-http/httplug-bundle": "^1.18",
         "symfony/config": "^4.3 || ^5.0",
         "symfony/dependency-injection": "^4.3 || ^5.0",

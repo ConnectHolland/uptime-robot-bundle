@@ -34,9 +34,9 @@ class Client extends BaseClient
         return parent::executePsr7Endpoint($endpoint, $fetch);
     }
 
-    public static function createClient($httpClient = null, $apiKey)
+    public static function createClient($httpClient = null, array $additionalPlugins = [], $apiKey)
     {
-        $client = parent::create($httpClient);
+        $client = parent::create($httpClient, $additionalPlugins);
         $client->setApiKey($apiKey);
 
         return $client;
