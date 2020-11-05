@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint;
 
-class EditPSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class EditPSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Public status pages can be edited using this method.
@@ -32,7 +32,7 @@ class EditPSP extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\
         $this->formParameters = $formParameters;
     }
 
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
 
     public function getMethod(): string
     {

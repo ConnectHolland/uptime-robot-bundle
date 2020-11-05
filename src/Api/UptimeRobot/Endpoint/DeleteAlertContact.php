@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint;
 
-class DeleteAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class DeleteAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Alert contacts can be deleted using this method.
@@ -26,7 +26,7 @@ class DeleteAlertContact extends \Jane\OpenApiRuntime\Client\BaseEndpoint implem
         $this->formParameters = $formParameters;
     }
 
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
 
     public function getMethod(): string
     {

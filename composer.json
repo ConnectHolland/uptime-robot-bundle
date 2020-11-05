@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.3",
-        "jane-php/open-api-runtime": "^6.0.2",
+        "jane-php/open-api-runtime": "^6.2",
         "php-http/httplug-bundle": "^1.18",
         "symfony/config": "^4.3 || ^5.0",
         "symfony/dependency-injection": "^4.3 || ^5.0",
@@ -20,7 +20,6 @@
         "symfony/translation-contracts": "^2.1"
     },
     "require-dev": {
-        "ergebnis/composer-normalize": "^2.4",
         "friendsofphp/php-cs-fixer": "^2.15",
         "icanhazstring/composer-unused": "^0.7.5",
         "jane-php/open-api-2": "^6.0",

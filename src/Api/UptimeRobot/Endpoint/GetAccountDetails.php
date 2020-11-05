@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint;
 
-class GetAccountDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class GetAccountDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * Account details (max number of monitors that can be added and number of up/down/paused monitors) can be grabbed using this method.
@@ -25,7 +25,7 @@ class GetAccountDetails extends \Jane\OpenApiRuntime\Client\BaseEndpoint impleme
         $this->formParameters = $formParameters;
     }
 
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
 
     public function getMethod(): string
     {

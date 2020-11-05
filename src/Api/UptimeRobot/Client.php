@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot;
 
-class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
+class Client extends \Jane\OpenApiRuntime\Client\Client
 {
     /**
      * Account details (max number of monitors that can be added and number of up/down/paused monitors) can be grabbed using this method.
@@ -29,7 +29,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function getAccountDetails(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetAccountDetails($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetAccountDetails($formParameters), $fetch);
     }
 
     /**
@@ -70,7 +70,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function getMonitors(array $queryParameters = [], array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetMonitors($queryParameters, $formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetMonitors($queryParameters, $formParameters), $fetch);
     }
 
     /**
@@ -103,7 +103,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function newMonitor(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewMonitor($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewMonitor($formParameters), $fetch);
     }
 
     /**
@@ -138,7 +138,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function editMonitor(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditMonitor($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditMonitor($formParameters), $fetch);
     }
 
     /**
@@ -160,7 +160,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function deleteMonitor(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeleteMonitor($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeleteMonitor($formParameters), $fetch);
     }
 
     /**
@@ -182,7 +182,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function resetMonitor(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\ResetMonitor($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\ResetMonitor($formParameters), $fetch);
     }
 
     /**
@@ -206,7 +206,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function getAlertContacts(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetAlertContacts($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetAlertContacts($formParameters), $fetch);
     }
 
     /**
@@ -230,7 +230,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function newAlertContact(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewAlertContact($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewAlertContact($formParameters), $fetch);
     }
 
     /**
@@ -255,7 +255,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function editAlertContact(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditAlertContact($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditAlertContact($formParameters), $fetch);
     }
 
     /**
@@ -277,7 +277,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function deleteAlertContact(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeleteAlertContact($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeleteAlertContact($formParameters), $fetch);
     }
 
     /**
@@ -301,7 +301,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function getMaintenanceWindows(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetMaintenanceWindows($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetMaintenanceWindows($formParameters), $fetch);
     }
 
     /**
@@ -325,7 +325,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function getPSPs(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetPSPs($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\GetPSPs($formParameters), $fetch);
     }
 
     /**
@@ -352,7 +352,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function newPSP(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewPSP($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\NewPSP($formParameters), $fetch);
     }
 
     /**
@@ -380,7 +380,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function editPSP(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditPSP($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\EditPSP($formParameters), $fetch);
     }
 
     /**
@@ -402,7 +402,7 @@ class Client extends \Jane\OpenApiRuntime\Client\Psr18Client
      */
     public function deletePSP(array $formParameters = [], string $fetch = self::FETCH_OBJECT)
     {
-        return $this->executePsr7Endpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeletePSP($formParameters), $fetch);
+        return $this->executeEndpoint(new \ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint\DeletePSP($formParameters), $fetch);
     }
 
     public static function create($httpClient = null, array $additionalPlugins = [])

@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace ConnectHolland\UptimeRobotBundle\Api;
 
 use ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Client as BaseClient;
-use Jane\OpenApiRuntime\Client\Psr7Endpoint;
+use Jane\OpenApiRuntime\Client\Endpoint;
 
 class Client extends BaseClient
 {
@@ -21,7 +21,7 @@ class Client extends BaseClient
         $this->apiKey = $apiKey;
     }
 
-    public function executePsr7Endpoint(Psr7Endpoint $endpoint, string $fetch = self::FETCH_OBJECT)
+    public function executeEndpoint(Endpoint $endpoint, string $fetch = self::FETCH_OBJECT)
     {
         $endpoint->formParameters = array_merge(
             [
@@ -31,7 +31,7 @@ class Client extends BaseClient
             $endpoint->formParameters
         );
 
-        return parent::executePsr7Endpoint($endpoint, $fetch);
+        return parent::executeEndpoint($endpoint, $fetch);
     }
 
     public static function createClient($httpClient = null, array $additionalPlugins = [], $apiKey)

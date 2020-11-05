@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace ConnectHolland\UptimeRobotBundle\Api\UptimeRobot\Endpoint;
 
-class NewMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
+class NewMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Endpoint
 {
     /**
      * New monitors of any type can be created using this method.
@@ -37,7 +37,7 @@ class NewMonitor extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Ja
         $this->formParameters = $formParameters;
     }
 
-    use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
+    use \Jane\OpenApiRuntime\Client\EndpointTrait;
 
     public function getMethod(): string
     {
